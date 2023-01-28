@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>10 Python __init__.py Best Practices - CLIMB</title>
+</head>
+<body>
+  <div role="document">
+    <div>
+      <main>
+        <article>
+          <div>
+            <div>
+              <h1>10 Python __init__.py Best Practices</h1>
+              <p>Python __init__.py files are often used to define
+              a consistent look and feel for a package, to
+              initialize the package level logger, to register
+              entry points, and more. Here are 10 best practices
+              for using __init__.py files in Python.</p>
+              <div>
+                <div>
+                  <div>
+                   Charlene Eastwood
+                  </div>
+                </div>
+                <div>
+                  Published Oct 28, 2022
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div>
+              <p>Python __init__.py files are used to initialize
+              Python packages. They are executed when the package
+              is first imported.</p>
+              <p>__init__.py files can be used to set up global
+              variables, define functions and classes, and run
+              code.</p>
+              <p>While __init__.py files are not required, they are
+              often used to customize the behavior of a
+              package.</p>
+              <p>In this article, we will discuss 10 best practices
+              for working with Python __init__.py files.</p>
+              <h4 id="p0">1. Use __init__.py to control what is
+              imported by from module import *</h4>
+              <p>When you use from module import *, Python will
+              import everything that is in the module. This
+              includes variables, functions, and classes. However,
+              it can also include things that you don’t want to be
+              imported, like private variables and functions.</p>
+              <p>If you have a lot of code in your module, it can
+              be hard to keep track of what is being imported and
+              what isn’t. By using __init__.py, you can control
+              exactly what is being imported, so you can be sure
+              that only the public API is being used.</p>
+              <p>This is especially important when you are
+              distributing your module to other people, because you
+              don’t want them to accidentally use private API.</p>
+              <h4 id="p1">2. Use __all__ to control what is
+              imported by from package import *</h4>
+              <p>When you use from package import *, Python will
+              import everything in the __init__.py file. This can
+              be a problem if your __init__.py file contains things
+              that you don’t want to be imported this way. For
+              example, you might have some utility functions in
+              your __init__.py file that you only want to be
+              imported explicitly.</p>
+              <p>To solve this problem, you can use the __all__
+              variable. __all__ is a list of strings, and each
+              string is the name of something that should be
+              imported by from package import *. For example:</p>
+              <p>__all__ = [‘foo’, ‘bar’]</p>
+              <p>With this in place, from package import * will
+              only import foo and bar, and not anything else in the
+              __init__.py file.</p>
+              <h4 id="p2">3. Use __version__ for version
+              numbering</h4>
+              <p>__version__ is a special variable that is
+              automatically created by Python when the interpreter
+              starts up. It contains information about the current
+              version of the interpreter, including the release
+              number, build number, and platform.</p>
+              <p>This information can be useful for a number of
+              purposes, such as debugging and compatibility
+              checking. For example, if you are using a third-party
+              library that is not compatible with the current
+              version of Python, you can use __version__ to check
+              whether or not you need to upgrade your
+              interpreter.</p>
+              <p>Additionally, __version__ can be used to enforce
+              backward compatibility. For example, if your code
+              relies on features that were added in a particular
+              version of Python, you can use __version__ to ensure
+              that those features are available.</p>
+              <p>Finally, __version__ can be used as a simple way
+              to provide version information to users of your code.
+              If you include __version__ in your __init__.py file,
+              it will be available as a global variable that can be
+              imported by other modules.</p>
+              <h4 id="p3">4. Use logging in __init__.py</h4>
+              <p>When your Python code is executed, the interpreter
+              will first execute the code in __init__.py. This
+              makes __init__.py the ideal place to put code that
+              you want to run when your module is first
+              imported.</p>
+              <p>However, if you have a lot of code in __init__.py,
+              it can be difficult to debug because all of the code
+              is executed at once. This is where logging comes
+              in.</p>
+              <p>Logging allows you to see what code is being
+              executed and when. It’s also useful for tracking
+              errors. By default, Python’s logging module will log
+              messages to stdout, which means you can see them in
+              your terminal.</p>
+              <p>To use logging in __init__.py, simply add the
+              following code at the top of the file:</p>
+              <p>import logging<br>
+              logging.basicConfig(level=logging.DEBUG)</p>
+              <p>Now, any code you add below this will be logged.
+              For example, let’s say you have the following code in
+              __init__.py:</p>
+              <p>def foo():<br>
+              print(‘foo’)<br>
+              <br>
+              def bar():<br>
+              print(‘bar’)<br>
+              <br>
+              If you import your module, you’ll see the following
+              output in your terminal:</p>
+              <p>DEBUG:root:foo<br>
+              DEBUG:root:bar</p>
+              <p>As you can see, logging is a great way to debug
+              your __init__.py code.</p>
+              <h4 id="p4">5. Use __init__.py to define a consistent
+              look and feel for your packages</h4>
+              <p>When you import a package, Python will
+              automatically execute the code in __init__.py. This
+              means that __init__.py is the perfect place to put
+              code that you want to run every time a package is
+              imported.</p>
+              <p>For example, let’s say you have a package with
+              several subpackages, and each subpackage has its own
+              __init__.py file. You can use the __init__.py files
+              to ensure that all of the subpackages have the same
+              look and feel. For example, you could use __init__.py
+              to set the logging level for all of the subpackages,
+              or to configure the database connection for all of
+              the subpackages.</p>
+              <p>This consistent look and feel makes it much easier
+              for users of your packages to understand how they
+              work, and makes it more likely that they will be able
+              to use them correctly.</p>
+              <h4 id="p5">6. Use __init__.py to initialize the
+              package level logger</h4>
+              <p>When you have a package with multiple modules, it
+              can be helpful to have a single point of entry for
+              logging. This way, you can ensure that all messages
+              are going to the same place, and you can configure
+              the logger once instead of in each module.</p>
+              <p>Additionally, if you’re using third-party
+              libraries that also use logging, initializing the
+              logger in __init__.py ensures that your messages
+              don’t get lost in the shuffle.</p>
+              <h4 id="p6">7. Use __init__.py to register entry
+              points</h4>
+              <p>If you have a project with multiple modules, it
+              can be difficult to keep track of what’s where. By
+              using __init__.py to register entry points, you can
+              make it easier for yourself and others to find the
+              code they’re looking for.</p>
+              <p>For example, say you have a project with two
+              modules, foo and bar. If you register an entry point
+              for each module in __init__.py, then someone can go
+              to the project’s root directory and run foo or bar
+              directly.</p>
+              <p>This is especially useful if you have command-line
+              scripts in your project. By registering their entry
+              points in __init__.py, you can make it so that people
+              don’t have to remember which directory the script is
+              in.</p>
+              <p>Of course, you can also use __init__.py for other
+              purposes, such as setting up logging or defining
+              constants. But if you’re looking for a way to make
+              your project more user-friendly, then registering
+              entry points is a great place to start.</p>
+              <h4 id="p7">8. Use __init__.py to configure
+              matplotlib</h4>
+              <p>Matplotlib is a powerful plotting library that can
+              produce publication quality figures. However, the
+              default configuration is often not ideal for
+              scientific plotting. For example, the default font
+              size is too small, the default figure size is too
+              small, and the default colors are not aesthetically
+              pleasing.</p>
+              <p>Fortunately, matplotlib can be configured to look
+              much better. The easiest way to do this is to put the
+              following code in your __init__.py file:</p>
+              <p>import matplotlib as mpl<br>
+              mpl.rcParams[‘font.size’] = 18<br>
+              mpl.rcParams[‘figure.figsize’] = (8,6)<br>
+              mpl.rcParams[‘lines.linewidth’] = 2<br>
+              mpl.rcParams[‘xtick.major.width’] = 2<br>
+              mpl.rcParams[‘ytick.major.width’] = 2<br>
+              mpl.rcParams[‘axes.facecolor’] = ‘white’<br>
+              mpl.rcParams[‘savefig.facecolor’] = ‘white’<br>
+              This will change the font size, figure size, line
+              width, tick width, and background color of all
+              matplotlib plots. This makes them much easier to read
+              and more aesthetically pleasing.</p>
+              <h4 id="p8">9. Use __init__.py to load data
+              files</h4>
+              <p>When you have data files that are needed by your
+              package, it’s best to load them into memory when the
+              package is imported. That way, the data is always
+              available and there’s no need to worry about file
+              paths or loading the data every time it’s needed.</p>
+              <p>This also has the added benefit of making your
+              package more self-contained. If someone wants to use
+              your package, they don’t need to worry about where to
+              get the data files from or how to load them.
+              Everything is taken care of by __init__.py.</p>
+              <p>Of course, this only works for small data files.
+              If you have large data files, you’ll need to find
+              another way to load them into memory.</p>
+              <h4 id="p9">10. Use __init__.py to set default values
+              for other modules</h4>
+              <p>When you have a lot of code in your project, it
+              can be difficult to keep track of what values are
+              being used by other modules. This is especially true
+              if those values are constantly changing. By setting
+              default values in __init__.py, you can make sure that
+              all of the modules in your project are using the same
+              values.</p>
+              <p>This also makes it easier to change those values
+              in the future. If you need to update the value of a
+              variable in one module, you can simply change the
+              value in __init__.py and all of the other modules
+              will use the new value.</p>
+              <p>__init__.py is also a good place to put code that
+              should be run when the module is first imported. For
+              example, you could use it to initialize variables or
+              connect to a database.</p>
+            </div>
+            <div>
+              <div>
+                <div>
+                  <div>
+                    Charlene Eastwood is a Python programmer with
+                    years of experience in the language. She has
+                    written extensively on the topic of error
+                    handling in Python, and her advice is sought by
+                    programmers of all levels of experience.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

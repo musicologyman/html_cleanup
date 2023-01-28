@@ -1,0 +1,647 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>10 Python __init__.py Best Practices &#x2d; CLIMB</title>
+<link rel="dns-prefetch" href="https://www.google-analytics.com/" />
+<link rel="preconnect" href="https://www.google-analytics.com/" crossorigin="anonymous" />
+<meta name="robots" content="max-snippet:-1,max-image-preview:standard,max-video-preview:-1" />
+<meta name="description" content="Python __init__.py files are often used to define a consistent look and feel for a package, to initialize the package level logger, to register entry points&#8230;" />
+<meta property="og:image" content="https://climbtheladder.com/cdn-cgi/image/width=512,height=512,fit=crop,quality=80,format=auto,onerror=redirect,metadata=none/wp-content/uploads/2022/08/cropped-ico.png" />
+<meta property="og:image:width" content="512" />
+<meta property="og:image:height" content="512" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="10 Python __init__.py Best Practices" />
+<meta property="og:description" content="Python __init__.py files are often used to define a consistent look and feel for a package, to initialize the package level logger, to register entry points, and more. Here are 10 best practices for&#8230;" />
+<meta property="og:url" content="https://climbtheladder.com/10-python-__init__-py-best-practices/" />
+<meta property="og:site_name" content="CLIMB" />
+<meta property="og:updated_time" content="2022-10-28T14:08+00:00" />
+<meta property="article:published_time" content="2022-10-28T14:08+00:00" />
+<meta property="article:modified_time" content="2022-10-28T14:08+00:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="10 Python __init__.py Best Practices" />
+<meta name="twitter:description" content="Python __init__.py files are often used to define a consistent look and feel for a package, to initialize the package level logger, to register entry points, and more. Here are 10 best practices for&#8230;" />
+<meta name="twitter:image" content="https://climbtheladder.com/cdn-cgi/image/width=512,height=512,fit=crop,quality=80,format=auto,onerror=redirect,metadata=none/wp-content/uploads/2022/08/cropped-ico.png" />
+<meta name="twitter:image:width" content="512" />
+<meta name="twitter:image:height" content="512" />
+<link rel="canonical" href="https://climbtheladder.com/10-python-__init__-py-best-practices/" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://climbtheladder.com/","name":"CLIMB: Career and business news and advice you can trust."}},{"@type":"ListItem","position":2,"item":{"@id":"https://climbtheladder.com/category/insights/","name":"Insights"}},{"@type":"ListItem","position":3,"item":{"@id":"https://climbtheladder.com/10-python-__init__-py-best-practices/","name":"10 Python __init__.py Best Practices"}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://climbtheladder.com/10-python-__init__-py-best-practices/"},"headline":"10 Python __init__.py Best Practices","datePublished":"2022-10-28T14:08:16+00:00","dateModified":"2022-10-28T14:08:16+00:00","author":{"@type":"Person","name":"Charlene Eastwood","url":"https://climbtheladder.com/author/charlene-eastwood/"},"publisher":{"@type":"Organization","name":"CLIMB","logo":{"@type":"ImageObject","url":"https://climbtheladder.com/cdn-cgi/image/width=60,height=60,fit=crop,quality=80,format=auto,onerror=redirect,metadata=none/wp-content/uploads/2022/08/cropped-ico.png","width":60,"height":60}},"description":"Python __init__.py files are often used to define a consistent look and feel for a package, to initialize the package level logger, to register entry points&#8230;"}</script>
+<link rel='dns-prefetch' href='//scripts.mediavine.com' />
+<link rel='stylesheet' id='wp-block-library-css' href='https://climbtheladder.com/wp-includes/css/dist/block-library/style.min.css?ver=6.1.1' type='text/css' media='all' />
+<link rel='stylesheet' id='wc-blocks-vendors-style-css' href='https://climbtheladder.com/wp-content/plugins/woocommerce/packages/woocommerce-blocks/build/wc-blocks-vendors-style.css?ver=8.9.2' type='text/css' media='all' />
+<link rel='stylesheet' id='wc-blocks-style-css' href='https://climbtheladder.com/wp-content/plugins/woocommerce/packages/woocommerce-blocks/build/wc-blocks-style.css?ver=8.9.2' type='text/css' media='all' />
+<link rel='stylesheet' id='classic-theme-styles-css' href='https://climbtheladder.com/wp-includes/css/classic-themes.min.css?ver=1' type='text/css' media='all' />
+<style id='global-styles-inline-css' type='text/css'>
+body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--duotone--dark-grayscale: url('#wp-duotone-dark-grayscale');--wp--preset--duotone--grayscale: url('#wp-duotone-grayscale');--wp--preset--duotone--purple-yellow: url('#wp-duotone-purple-yellow');--wp--preset--duotone--blue-red: url('#wp-duotone-blue-red');--wp--preset--duotone--midnight: url('#wp-duotone-midnight');--wp--preset--duotone--magenta-yellow: url('#wp-duotone-magenta-yellow');--wp--preset--duotone--purple-green: url('#wp-duotone-purple-green');--wp--preset--duotone--blue-orange: url('#wp-duotone-blue-orange');--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;}:where(.is-layout-flex){gap: 0.5em;}body .is-layout-flow > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}body .is-layout-flow > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}body .is-layout-flow > .aligncenter{margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}body .is-layout-constrained > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}body .is-layout-constrained > .aligncenter{margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)){max-width: var(--wp--style--global--content-size);margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > .alignwide{max-width: var(--wp--style--global--wide-size);}body .is-layout-flex{display: flex;}body .is-layout-flex{flex-wrap: wrap;align-items: center;}body .is-layout-flex > *{margin: 0;}:where(.wp-block-columns.is-layout-flex){gap: 2em;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+.wp-block-navigation a:where(:not(.wp-element-button)){color: inherit;}
+:where(.wp-block-columns.is-layout-flex){gap: 2em;}
+.wp-block-pullquote{font-size: 1.5em;line-height: 1.6;}
+</style>
+<link rel='stylesheet' id='wc-memberships-frontend-css' href='https://climbtheladder.com/wp-content/plugins/woocommerce-memberships/assets/css/frontend/wc-memberships-frontend.min.css?ver=1.20.0' type='text/css' media='all' />
+<link rel='stylesheet' id='sage/main.css-css' href='https://climbtheladder.com/wp-content/themes/civitas/dist/styles/main_f0813627.css' type='text/css' media='all' />
+<link rel='stylesheet' id='sage/sliders.css-css' href='https://climbtheladder.com/wp-content/themes/civitas/dist/styles/sliders_f0813627.css' type='text/css' media='all' />
+<script type='text/javascript' async="async" data-noptimize="1" data-cfasync="false" src='https://scripts.mediavine.com/tags/climb-the-ladder.js?ver=6.1.1' id='mv-script-wrapper-js'></script>
+<script type='text/javascript' src='https://climbtheladder.com/wp-includes/js/jquery/jquery.min.js?ver=3.6.1' id='jquery-core-js'></script>
+<script type='text/javascript' src='https://climbtheladder.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2' id='jquery-migrate-js'></script>
+<link rel="https://api.w.org/" href="https://climbtheladder.com/wp-json/" /><link rel="alternate" type="application/json" href="https://climbtheladder.com/wp-json/wp/v2/posts/138168" /><link rel="alternate" type="application/json+oembed" href="https://climbtheladder.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fclimbtheladder.com%2F10-python-__init__-py-best-practices%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://climbtheladder.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fclimbtheladder.com%2F10-python-__init__-py-best-practices%2F&#038;format=xml" />
+<meta name='ir-site-verification-token' value='-1176893365'><script type="text/javascript">//<![CDATA[
+  function external_links_in_new_windows_loop() {
+    if (!document.links) {
+      document.links = document.getElementsByTagName('a');
+    }
+    var change_link = false;
+    var force = '';
+    var ignore = '';
+
+    for (var t=0; t<document.links.length; t++) {
+      var all_links = document.links[t];
+      change_link = false;
+      
+      if(document.links[t].hasAttribute('onClick') == false) {
+        // forced if the address starts with http (or also https), but does not link to the current domain
+        if(all_links.href.search(/^http/) != -1 && all_links.href.search('climbtheladder.com') == -1 && all_links.href.search(/^#/) == -1) {
+          // console.log('Changed ' + all_links.href);
+          change_link = true;
+        }
+          
+        if(force != '' && all_links.href.search(force) != -1) {
+          // forced
+          // console.log('force ' + all_links.href);
+          change_link = true;
+        }
+        
+        if(ignore != '' && all_links.href.search(ignore) != -1) {
+          // console.log('ignore ' + all_links.href);
+          // ignored
+          change_link = false;
+        }
+
+        if(change_link == true) {
+          // console.log('Changed ' + all_links.href);
+          document.links[t].setAttribute('onClick', 'javascript:window.open(\'' + all_links.href.replace(/'/g, '') + '\', \'_blank\', \'noopener\'); return false;');
+          document.links[t].removeAttribute('target');
+        }
+      }
+    }
+  }
+  
+  // Load
+  function external_links_in_new_windows_load(func)
+  {  
+    var oldonload = window.onload;
+    if (typeof window.onload != 'function'){
+      window.onload = func;
+    } else {
+      window.onload = function(){
+        oldonload();
+        func();
+      }
+    }
+  }
+
+  external_links_in_new_windows_load(external_links_in_new_windows_loop);
+  //]]></script>
+<style>
+
+        :root {
+            --headerColor: #4b57d3;
+        }
+
+    </style>
+<noscript><style>.woocommerce-product-gallery{ opacity: 1 !important; }</style></noscript>
+<link rel="icon" href="https://climbtheladder.com/cdn-cgi/image/width=60,height=60,fit=crop,quality=80,format=auto,onerror=redirect,metadata=none/wp-content/uploads/2022/08/cropped-ico.png" sizes="32x32" />
+<link rel="icon" href="https://climbtheladder.com/cdn-cgi/image/width=300,height=300,fit=crop,quality=80,format=auto,onerror=redirect,metadata=none/wp-content/uploads/2022/08/cropped-ico.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://climbtheladder.com/cdn-cgi/image/width=300,height=300,fit=crop,quality=80,format=auto,onerror=redirect,metadata=none/wp-content/uploads/2022/08/cropped-ico.png" />
+<meta name="msapplication-TileImage" content="https://climbtheladder.com/cdn-cgi/image/width=300,height=300,fit=crop,quality=80,format=auto,onerror=redirect,metadata=none/wp-content/uploads/2022/08/cropped-ico.png" />
+<style type="text/css" id="wp-custom-css">
+			p.dash {
+  padding-top:16px;padding-bottom:16px;margin:0px;border-bottom:1px solid #f2f4f5;
+}
+
+.dash p {
+  padding-top:16px;padding-bottom:16px;margin:0px;border-bottom:1px solid #f2f4f5;
+}
+
+div.sider {
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+}
+
+#sider {
+
+background:#fff;
+height:60px;
+z-index:170;
+margin:0 auto;
+border-bottom:1px solid #dadada;
+width:100%;
+position:fixed;
+top:0;
+left:0;
+right:0;
+text-align: center;
+}
+
+.section {
+scroll-margin-top: 3em;
+}
+.grecaptcha-badge { visibility: hidden; }
+
+.wpbr-education ul {margin-top:10px;}
+/* .wp-block-table-of-content ul {display:block!important} */
+
+.article-container .article__content h1 h2 h3 h4 h5 h6 {
+	margin: 2.25rem 0 1.25rem
+}
+
+.article-container .article__content p {
+	margin: 0 0 1.25rem;
+}
+
+.article-container .article__content h2 {
+	margin: 2.5rem 0 1.25rem
+}
+
+.article-container .article__content h3 {
+	margin: 2.5rem 0 1.25rem
+}
+.article-container .article__content h4 {
+	margin: 2.5rem 0 1.25rem
+}
+
+.article-container .article__content h4 {
+	margin: 2.5rem 0 1.25rem
+}
+
+.article-container .article__content h5 {
+	margin: 2.5rem 0 1.25rem
+}
+
+.article__sidebar-nav .sticky-sidebar-wrapper ul li,
+.wp-block-sticky-content__sidebar .sticky-sidebar-wrapper ul li {
+	font-family: Avenir Regular, sans-serif;
+	font-size: .9375rem;
+	font-weight: 600;
+	list-style: none
+}
+
+.StandardTable thead tr {
+    background-color: #dceef6;
+    font-weight: bold;
+	  height:53px;
+}
+
+.StandardTable tr {
+	  height:53px;
+}
+
+.StandardTable {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    font-weight: 400;
+    letter-spacing: -0.1px;
+    color: #1f1f1f;
+    -webkit-font-smoothing: antialiased;
+    box-sizing: border-box;
+    margin: 24px 0;
+}
+
+.StandardTable table {
+-webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    color: #1f1f1f;
+    -webkit-font-smoothing: antialiased;
+    box-sizing: border-box;
+    border-collapse: collapse;
+    border-spacing: 0;
+    max-width: 100%;
+    background-color: transparent;
+    border: 1px solid #e0e0e0;
+    width: 100%;
+    margin: unset;
+    border-radius: 4px;
+    letter-spacing: 0;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 400;
+	  word-break: normal;
+}
+
+
+
+.StandardTable table td,
+.StandardTable table th {
+	padding: 5px 20px;
+	text-align: left;
+	border: 0
+}
+
+.wp-block-table.is-style-stripes tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+.wp-block-table.is-style-stripes tbody tr:nth-child(even) {
+    background-color: #f5f5f5;
+}
+
+.wp-block-table.is-style-stripes {
+    border-bottom: 0!important;
+}
+
+@media(max-width:600px){
+.StandardTablelong table{
+overflow-x: auto;
+overflow-y: hidden;
+white-space: nowrap;
+}
+
+}
+
+.similarlist {
+line-height: 1.5;
+border: 0 solid;
+padding: 0;
+box-sizing: border-box;
+min-width: 0;
+list-style: outside;
+margin-bottom: 2.5rem;
+grid-column: article-content-normal;	
+}
+.similarlist li {
+    line-height: 1.5;
+    list-style: outside;
+    border: 0 solid;
+    box-sizing: border-box;
+    min-width: 0;
+    color: #2d2d2d;
+    margin: .75rem 0 0 1rem;
+    margin-left: 1.5rem;
+    font-size: 1.25rem;
+    margin-top: .7rem;
+}
+p.jobstitle {
+    text-align: left;
+    font-weight: 500 !important;
+    font-size: 1.5rem;
+    color: #1a202c;
+    font-family: Avenir Demi,sans-serif;
+    line-height: 1.25;
+    margin: 2.5rem 0 0rem !important;
+}
+
+/* Mediavine Mobile CSS */
+
+@media only screen and (max-width: 359px) {
+
+li .mv-ad-box {
+
+min-width: 300px;
+
+margin-left: -40px;
+
+}
+
+}
+
+@media only screen and (max-width: 359px) {
+
+.article-container .article__content.has-ads {
+
+padding-left: 10px;
+
+padding-right: 10px;
+
+}
+
+}
+
+.rm-sticky .rm-sticky-ad img {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.about-author,
+.article-nav,
+.article__content {
+	box-sizing: border-box;
+	max-width: 720px;
+	margin: 0 auto;
+	padding: 0 10px;
+	word-break: break-word
+}
+
+.sticky-sidebar-wrapper h3 {
+    margin: 0px !important;
+}		</style>
+<meta name="description" content="Python __init__.py files are often used to define a consistent look and feel for a package, to initialize the package level logger, to register entry points, and more. Here are 10 best practices for using __init__.py files in Python.">
+</head>
+<body class="post-template-default single single-post postid-138168 single-format-standard theme-civitas/resources woocommerce-no-js 10-python-__init__-py-best-practices app-data index-data singular-data single-data single-post-data single-post-10-python-__init__-py-best-practices-data">
+<div class="sidebar-overlay"></div>
+<div id="notifications">
+<div class="notice-inset"></div>
+</div>
+<header class="theme-header">
+<div class="header-left">
+<div class="header-nav">
+<div class="header-nav__burger">
+<span></span>
+<span></span>
+<span></span>
+</div>
+<div class="header-nav__wrapper">
+<div class="header-nav__head">
+<div class="header-logo">
+<a href="/"><img src="https://climbtheladder.com/wp-content/uploads/2022/09/LOGO2.png" alt="CLIMB" /></a>
+</div>
+</div>
+<div class="header-nav__content">
+<nav class="nav-primary">
+<div class="menu-sidebar-container"><ul id="menu-sidebar" class="nav"><li id="menu-item-49" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-49"><a href="https://climbtheladder.com/">Home</a></li>
+<li id="menu-item-15092" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-15092"><a href="https://climbtheladder.com/category/career-development/">Career Development</a></li>
+<li id="menu-item-137847" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-137847"><a href="https://climbtheladder.com/category/insights/">Insights</a></li>
+<li id="menu-item-102934" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-102934"><a href="https://climbtheladder.com/category/education/">Education</a></li>
+<li id="menu-item-123708" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-123708"><a href="https://climbtheladder.com/category/hiring-and-managing-employees/">Hiring/Managing Employees</a></li>
+<li id="menu-item-15098" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-15098"><a href="https://climbtheladder.com/category/resume/">Resume</a></li>
+<li id="menu-item-15093" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-15093"><a href="https://climbtheladder.com/category/cover-letter/">Cover Letter</a></li>
+<li id="menu-item-15095" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-15095"><a href="https://climbtheladder.com/category/interview/">Interview</a></li>
+<li id="menu-item-105563" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-105563"><a href="https://climbtheladder.com/category/job-search/">Job Search</a></li>
+<li id="menu-item-31802" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-31802"><a href="https://climbtheladder.com/contact-us/">Contact Us</a></li>
+</ul></div>
+<div class="account-auth">
+<h4>Account</h4>
+<div class="menu-account-container">
+<ul id="menu-account" class="nav">
+<li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://climbtheladder.com/sign-up/">Register</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://climbtheladder.com/sign-in/">Sign In</a></li>
+</ul>
+</div>
+</div>
+</nav>
+</div>
+</div>
+</div>
+<div class="header-logo">
+<a href="/"><img src="https://climbtheladder.com/wp-content/uploads/2022/09/LOGO2.png" alt="CLIMB" /></a>
+</div>
+<div class="header-search">
+<form role="search" method="get" class="search-form" action="https://climbtheladder.com/search/content">
+<label>
+<input value="" name="query" class="search-field" placeholder="Search CLIMB...">
+</label>
+<button type="submit" class="search-submit"><i class="fa fa-search"></i></button>
+</form>
+</div>
+</div>
+<div class="header-right">
+<div class="header-auth">
+<div class="menu-account-container">
+<ul id="menu-account-1" class="nav">
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-146"><a href="https://climbtheladder.com/sign-up/">Register</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-147"><a href="https://climbtheladder.com/sign-in/">Sign In</a></li>
+</ul>
+</div>
+</div>
+</div>
+</header>
+<div class="wrap" role="document">
+<div class="content">
+<main class="main">
+<article class="post-138168 post type-post status-publish format-standard hentry category-insights mv-content-wrapper">
+<div class="article__head post-has-no-image">
+<div class="article__content">
+<div class="article__categories">
+<a href="https://climbtheladder.com/category/insights/">Insights</a>
+</div>
+<h1 class="entry-title">10 Python __init__.py Best Practices</h1>
+<p class="entry-excerpt">Python __init__.py files are often used to define a consistent look and feel for a package, to initialize the package level logger, to register entry points, and more. Here are 10 best practices for using __init__.py files in Python.</p>
+<div class="post-meta">
+<div class="meta__avatar">
+<a href="/users/530/profile/charlene-eastwood" tabindex="-1">
+<img src="https://climbtheladder.com/wp-content/uploads/fly-images/137910/rec2ZPlpZCKwmhZ38file-64x64.png" />
+</a>
+</div>
+<div class="meta__details">
+<div class="meta__author-name">
+<a class="meta__author-link" href="/users/530/profile/charlene-eastwood" tabindex="0">Charlene Eastwood</a>
+</div>
+<div class="meta__position"></div>
+</div>
+<div class="meta__author-date">Published Oct 28, 2022</div>
+</div>
+</div>
+</div>
+<div class="article-container pt-5">
+<div class="article__content  ">
+<p>Python __init__.py files are used to initialize Python packages. They are executed when the package is first imported.</p><p>__init__.py files can be used to set up global variables, define functions and classes, and run code.</p><p>While __init__.py files are not required, they are often used to customize the behavior of a package.</p><p>In this article, we will discuss 10 best practices for working with Python __init__.py files.</p>
+<h4 id="p0">1. Use __init__.py to control what is imported by from module import *</h4><p>When you use from module import *, Python will import everything that is in the module. This includes variables, functions, and classes. However, it can also include things that you don&#8217;t want to be imported, like private variables and functions.</p><p>If you have a lot of code in your module, it can be hard to keep track of what is being imported and what isn&#8217;t. By using __init__.py, you can control exactly what is being imported, so you can be sure that only the public API is being used.</p><p>This is especially important when you are distributing your module to other people, because you don&#8217;t want them to accidentally use private API.</em></p><h4 id="p1">2. Use __all__ to control what is imported by from package import *</h4><p>When you use from package import *, Python will import everything in the __init__.py file. This can be a problem if your __init__.py file contains things that you don&#8217;t want to be imported this way. For example, you might have some utility functions in your __init__.py file that you only want to be imported explicitly.</p><p>To solve this problem, you can use the __all__ variable. __all__ is a list of strings, and each string is the name of something that should be imported by from package import *. For example:</p><p>__all__ = [&#8216;foo&#8217;, &#8216;bar&#8217;]</p><p>With this in place, from package import * will only import foo and bar, and not anything else in the __init__.py file.</em></p><h4 id="p2">3. Use __version__ for version numbering</h4><p>__version__ is a special variable that is automatically created by Python when the interpreter starts up. It contains information about the current version of the interpreter, including the release number, build number, and platform.</p><p>This information can be useful for a number of purposes, such as debugging and compatibility checking. For example, if you are using a third-party library that is not compatible with the current version of Python, you can use __version__ to check whether or not you need to upgrade your interpreter.</p><p>Additionally, __version__ can be used to enforce backward compatibility. For example, if your code relies on features that were added in a particular version of Python, you can use __version__ to ensure that those features are available.</p><p>Finally, __version__ can be used as a simple way to provide version information to users of your code. If you include __version__ in your __init__.py file, it will be available as a global variable that can be imported by other modules.</em></p><h4 id="p3">4. Use logging in __init__.py</h4><p>When your Python code is executed, the interpreter will first execute the code in __init__.py. This makes __init__.py the ideal place to put code that you want to run when your module is first imported.</p><p>However, if you have a lot of code in __init__.py, it can be difficult to debug because all of the code is executed at once. This is where logging comes in.</p><p>Logging allows you to see what code is being executed and when. It&#8217;s also useful for tracking errors. By default, Python&#8217;s logging module will log messages to stdout, which means you can see them in your terminal.</p><p>To use logging in __init__.py, simply add the following code at the top of the file:</p><p>import logging<br>logging.basicConfig(level=logging.DEBUG)</p><p>Now, any code you add below this will be logged. For example, let&#8217;s say you have the following code in __init__.py:</p><p>def foo():<br> print(&#8216;foo&#8217;)<br> <br>def bar():<br> print(&#8216;bar&#8217;)<br> <br>If you import your module, you&#8217;ll see the following output in your terminal:</p><p>DEBUG:root:foo<br>DEBUG:root:bar</p><p>As you can see, logging is a great way to debug your __init__.py code.</em></p><h4 id="p4">5. Use __init__.py to define a consistent look and feel for your packages</h4><p>When you import a package, Python will automatically execute the code in __init__.py. This means that __init__.py is the perfect place to put code that you want to run every time a package is imported.</p><p>For example, let&#8217;s say you have a package with several subpackages, and each subpackage has its own __init__.py file. You can use the __init__.py files to ensure that all of the subpackages have the same look and feel. For example, you could use __init__.py to set the logging level for all of the subpackages, or to configure the database connection for all of the subpackages.</p><p>This consistent look and feel makes it much easier for users of your packages to understand how they work, and makes it more likely that they will be able to use them correctly.</em></p><h4 id="p5">6. Use __init__.py to initialize the package level logger</h4><p>When you have a package with multiple modules, it can be helpful to have a single point of entry for logging. This way, you can ensure that all messages are going to the same place, and you can configure the logger once instead of in each module.</p><p>Additionally, if you&#8217;re using third-party libraries that also use logging, initializing the logger in __init__.py ensures that your messages don&#8217;t get lost in the shuffle.</em></p><h4 id="p6">7. Use __init__.py to register entry points</h4><p>If you have a project with multiple modules, it can be difficult to keep track of what&#8217;s where. By using __init__.py to register entry points, you can make it easier for yourself and others to find the code they&#8217;re looking for.</p><p>For example, say you have a project with two modules, foo and bar. If you register an entry point for each module in __init__.py, then someone can go to the project&#8217;s root directory and run foo or bar directly.</p><p>This is especially useful if you have command-line scripts in your project. By registering their entry points in __init__.py, you can make it so that people don&#8217;t have to remember which directory the script is in.</p><p>Of course, you can also use __init__.py for other purposes, such as setting up logging or defining constants. But if you&#8217;re looking for a way to make your project more user-friendly, then registering entry points is a great place to start.</em></p><h4 id="p7">8. Use __init__.py to configure matplotlib</h4><p>Matplotlib is a powerful plotting library that can produce publication quality figures. However, the default configuration is often not ideal for scientific plotting. For example, the default font size is too small, the default figure size is too small, and the default colors are not aesthetically pleasing.</p><p>Fortunately, matplotlib can be configured to look much better. The easiest way to do this is to put the following code in your __init__.py file:</p><p>import matplotlib as mpl<br>mpl.rcParams[&#8216;font.size&#8217;] = 18<br>mpl.rcParams[&#8216;figure.figsize&#8217;] = (8,6)<br>mpl.rcParams[&#8216;lines.linewidth&#8217;] = 2<br>mpl.rcParams[&#8216;xtick.major.width&#8217;] = 2<br>mpl.rcParams[&#8216;ytick.major.width&#8217;] = 2<br>mpl.rcParams[&#8216;axes.facecolor&#8217;] = &#8216;white&#8217;<br>mpl.rcParams[&#8216;savefig.facecolor&#8217;] = &#8216;white&#8217;<br>This will change the font size, figure size, line width, tick width, and background color of all matplotlib plots. This makes them much easier to read and more aesthetically pleasing.</em></p><h4 id="p8">9. Use __init__.py to load data files</h4><p>When you have data files that are needed by your package, it&#8217;s best to load them into memory when the package is imported. That way, the data is always available and there&#8217;s no need to worry about file paths or loading the data every time it&#8217;s needed.</p><p>This also has the added benefit of making your package more self-contained. If someone wants to use your package, they don&#8217;t need to worry about where to get the data files from or how to load them. Everything is taken care of by __init__.py.</p><p>Of course, this only works for small data files. If you have large data files, you&#8217;ll need to find another way to load them into memory.</em></p><h4 id="p9">10. Use __init__.py to set default values for other modules</h4><p>When you have a lot of code in your project, it can be difficult to keep track of what values are being used by other modules. This is especially true if those values are constantly changing. By setting default values in __init__.py, you can make sure that all of the modules in your project are using the same values.</p><p>This also makes it easier to change those values in the future. If you need to update the value of a variable in one module, you can simply change the value in __init__.py and all of the other modules will use the new value.</p><p>__init__.py is also a good place to put code that should be run when the module is first imported. For example, you could use it to initialize variables or connect to a database.</em></p> </div>
+<div class="article-nav">
+<div class="article-nav__item article-nav__item--previous">
+<a href="https://climbtheladder.com/10-azure-logging-best-practices/">
+<span>Previous</span>
+<h3>10 Azure Logging Best Practices</h3>
+</a>
+</div>
+<div class="article-nav__item article-nav__item--category">
+<a href="https://climbtheladder.com/category/insights/">
+<span>Back to Insights</span>
+<span><i class="fa fa-chevron-up"></i></span>
+</a>
+</div>
+<div class="article-nav__item article-nav__item--next">
+<a href="https://climbtheladder.com/10-donation-form-best-practices/">
+<span>Next</span>
+<h3>10 Donation Form Best Practices</h3>
+</a>
+</div>
+</div>
+<div class="about-author">
+<div class="post-meta">
+<div class="meta__avatar">
+<a href="/users/530/profile/charlene-eastwood" tabindex="-1">
+<img src="https://climbtheladder.com/wp-content/uploads/fly-images/137910/rec2ZPlpZCKwmhZ38file-64x64.png" />
+</a>
+</div>
+<div class="meta__details">
+<div class="meta__author-name">
+<a class="meta__author-link" href="/users/530/profile/charlene-eastwood" tabindex="0">Charlene Eastwood</a>
+</div>
+<div class="meta__position"></div>
+<div class="meta__about">Charlene Eastwood is a Python programmer with years of experience in the language. She has written extensively on the topic of error handling in Python, and her advice is sought by programmers of all levels of experience.</div>
+</div>
+</div>
+</div>
+</div>
+</article>
+<style>
+      .wp-block-sticky-content__sidebar .sticky-sidebar-wrapper ul li a.active::before,
+    .article__sidebar-nav .sticky-sidebar-wrapper ul li a.active::before
+    {
+      border-color: transparent transparent transparent #1f73be;
+    }
+        .wp-block-sticky-content__sidebar .sticky-sidebar-wrapper ul li a,
+    .article__sidebar-nav .sticky-sidebar-wrapper ul li a {
+      border-left: 1.5px solid #1f73be;
+    }
+
+    .article__sidebar-nav .sticky-sidebar-wrapper ul li.active ~ li a,
+    .wp-block-sticky-content__sidebar .sticky-sidebar-wrapper ul li.active ~ li a {
+    border-left: 1.5px solid #d4d4d4;
+    }
+        .wp-block-sticky-content__sidebar .sticky-sidebar-wrapper ul li a:hover {
+    .article__sidebar-nav .sticky-sidebar-wrapper ul li a:hover {
+     color: #1f73be;
+    }
+        .wp-block-table-of-content>div svg circle, .wp-block-table-of-content>div svg path,
+    .wp-block-table-of-content>div svg circle, .wp-block-table-of-content>div svg circle {
+      fill: #1e73be;
+    }
+        .wp-block-table-of-content ul li a:hover {
+      color: #1e73be;
+    }
+  </style>
+<section class="related-posts">
+<div class="container">
+<h2>You may also be interested in...</h2>
+<div class="row">
+<div class="col-12 col-md-6 col-lg-3">
+<div class="card post-block-item no-image">
+<div class="card-body">
+<div class="pbi-details">
+<div class="post-block-item__categories">
+<a href="https://climbtheladder.com/category/insights/">Insights</a>
+</div>
+<h5 class="post-block-item__title"><a href="https://climbtheladder.com/10-graphql-pagination-best-practices/">10 GraphQL Pagination Best Practices</a></h5>
+</div>
+<div class="post-meta">
+<div class="meta__avatar">
+<a href="/users/1783/profile/hannah-archer/" tabindex="-1">
+<img src="https://climbtheladder.com/wp-content/uploads/fly-images/146855/rectXnjv5q1emubrwfile-64x64.png" />
+</a>
+</div>
+<div class="meta__details">
+<div class="meta__author-name">
+<a class="meta__author-link" href="/users/1783/profile/hannah-archer/" tabindex="0">Hannah Archer</a>
+</div>
+<div class="meta__author-date">Nov 29, 2022</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-12 col-md-6 col-lg-3">
+<div class="card post-block-item no-image">
+<div class="card-body">
+<div class="pbi-details">
+<div class="post-block-item__categories">
+<a href="https://climbtheladder.com/category/insights/">Insights</a>
+</div>
+<h5 class="post-block-item__title"><a href="https://climbtheladder.com/10-neighborhood-watch-best-practices/">10 Neighborhood Watch Best Practices</a></h5>
+</div>
+<div class="post-meta">
+<div class="meta__avatar">
+<a href="/users/4198/profile/melissa-han/" tabindex="-1">
+<img src="https://climbtheladder.com/wp-content/uploads/fly-images/162334/recLDKpBEdHrskvaTfile-64x64.png" />
+</a>
+</div>
+<div class="meta__details">
+<div class="meta__author-name">
+<a class="meta__author-link" href="/users/4198/profile/melissa-han/" tabindex="0">Melissa Han</a>
+</div>
+<div class="meta__author-date">Dec 16, 2022</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-12 col-md-6 col-lg-3">
+<div class="card post-block-item no-image">
+<div class="card-body">
+<div class="pbi-details">
+<div class="post-block-item__categories">
+<a href="https://climbtheladder.com/category/insights/">Insights</a>
+</div>
+<h5 class="post-block-item__title"><a href="https://climbtheladder.com/10-mybatis-sql-best-practices/">10 MyBatis SQL Best Practices</a></h5>
+</div>
+<div class="post-meta">
+<div class="meta__avatar">
+<a href="/users/3857/profile/maria-bello/" tabindex="-1">
+<img src="https://climbtheladder.com/wp-content/uploads/fly-images/160910/recAiKnjdPipbaHB2file-64x64.png" />
+</a>
+</div>
+<div class="meta__details">
+<div class="meta__author-name">
+<a class="meta__author-link" href="/users/3857/profile/maria-bello/" tabindex="0">Maria Bello</a>
+</div>
+<div class="meta__author-date">Dec 20, 2022</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-12 col-md-6 col-lg-3">
+<div class="card post-block-item no-image">
+<div class="card-body">
+<div class="pbi-details">
+<div class="post-block-item__categories">
+<a href="https://climbtheladder.com/category/insights/">Insights</a>
+</div>
+<h5 class="post-block-item__title"><a href="https://climbtheladder.com/10-google-web-toolkit-gwt-best-practices/">10 Google Web Toolkit (GWT) Best Practices</a></h5>
+</div>
+<div class="post-meta">
+<div class="meta__avatar">
+<a href="/users/3643/profile/theresa-fenton/" tabindex="-1">
+<img src="https://climbtheladder.com/wp-content/uploads/fly-images/160393/recydkRVMSpk02ANMfile-64x64.png" />
+</a>
+</div>
+<div class="meta__details">
+<div class="meta__author-name">
+<a class="meta__author-link" href="/users/3643/profile/theresa-fenton/" tabindex="0">Theresa Fenton</a>
+</div>
+<div class="meta__author-date">Dec 14, 2022</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+</div>
+</div>
+<footer class="content-info">
+<div class="container">
+<section class="widget nav_menu-2 widget_nav_menu"><div class="menu-footer-navigation-container"><ul id="menu-footer-navigation" class="menu"><li id="menu-item-6156" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6156"><a href="https://climbtheladder.com/terms-conditions/">Terms And Conditions</a></li>
+<li id="menu-item-5925" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-privacy-policy menu-item-5925"><a href="https://climbtheladder.com/privacy-policy/">Privacy Policy</a></li>
+<li id="menu-item-739" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-739"><a href="https://climbtheladder.com/dmca/">DMCA</a></li>
+<li id="menu-item-31803" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-31803"><a href="https://climbtheladder.com/contact-us/">Contact Us</a></li>
+</ul></div></section><section class="widget text-2 widget_text"> <div class="textwidget"><p>Copyright © CLIMB  All Rights Reserved.</p>
+</div>
+</section> <div class="footer-logo"><img src="https://climbtheladder.com/wp-content/uploads/2022/09/LOGO2.png" alt="CLIMB" /></div>
+</div>
+</footer>
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;ga('create','UA-201759709-5','auto');0&&ga('set','anonymizeIp',true);0&&ga('require','linkid',{levels:5});''.length?ga('send','pageview',''):ga('send','pageview');</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+<script type="text/javascript">
+		(function () {
+			var c = document.body.className;
+			c = c.replace(/woocommerce-no-js/, 'woocommerce-js');
+			document.body.className = c;
+		})();
+	</script>
+<script type='text/javascript' src='https://climbtheladder.com/wp-content/themes/civitas/dist/scripts/sliders_f0813627.js' id='sage/sliders.js-js'></script>
+<script type='text/javascript' id='sage/main.js-js-extra'>
+/* <![CDATA[ */
+var ajax_object = {"ajax_url":"https:\/\/climbtheladder.com\/wp-admin\/admin-ajax.php","ajax_nonce":"561d9f86ad","gsc":"6LcGCbUaAAAAAHz6fniffV5G7FbAYlsTlnkhWHLB"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://climbtheladder.com/wp-content/themes/civitas/dist/scripts/main_f0813627.js' id='sage/main.js-js'></script>
+</body>
+</html>
